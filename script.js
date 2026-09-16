@@ -149,12 +149,16 @@ function handleMovement(dt) {
     movePaddle(state.right, (state.keys.rightDown ? 1 : 0) - (state.keys.rightUp ? 1 : 0), dt);
     return;
   }
-  const target = state.serving ? court.height / 2 + Math.sin(state.crowdPhase * .8) * 105 : state.ball.y - state.right.height / 2;
-  const anticipation = state.ball.vx > 0 ? state.ball.vy * .14 : 0;
-  const desired = target + anticipation;
-  const reaction = Math.abs(desired - state.right.y) > 8 ? Math.sign(desired - state.right.y) : 0;
+  const trackingBall = !state.serving && state.ball.vx > 0;
+  const neutralPosition = court.height / 2 - state.right.height / 2;
+  const target = trackingBall
+    ? state.ball.y - state.right.height / 2
+    : neutralPosition + Math.sin(state.crowdPhase * .8) * 105;
+  const timeToPaddle = state.ball.vx > 0 ? clamp((state.right.x - state.ball.x) / state.ball.vx, 0, .8) : 0;
+  const anticipation = state.ball.vx > 0 ? state.ball.vy * timeToPaddle : 0;
+  const desired = clamp(target + anticipation, court.padding + 5, court.height - court.padding - state.right.height - 5);
+  const reaction = Math.abs(desired - state.right.y) > 3 ? Math.sign(desired - state.right.y) : 0;
   movePaddle(state.right, reaction, dt);
-  if (!state.serving && Math.abs(desired - state.right.y) < 28) state.right.velocity *= .7;
 }
 function bounce(paddle, side) {
   const relative = (state.ball.y - (paddle.y + paddle.height / 2)) / (paddle.height / 2);
@@ -241,6 +245,8 @@ function loop(timestamp) { const dt = Math.min((timestamp - state.lastTime) / 10
 function setTheme() { const current = theme(); document.documentElement.style.setProperty('--court-green', current.court); document.documentElement.style.setProperty('--court-deep', current.deep); document.documentElement.style.setProperty('--theme-glow', `${current.glow}33`); document.documentElement.style.setProperty('--theme-surface', current.ui); $('court-name').textContent = current.name; $('arena-lighting').textContent = current.lighting; populateThemes(); resetMatch(); }
 function keyState(event, pressed) {
   const key = event.key.toLowerCase();
+  const editingControl = ['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target.tagName);
+  if (!editingControl && ['arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) event.preventDefault();
   if (key === 'w') state.keys.leftUp = pressed;
   if (key === 's') state.keys.leftDown = pressed;
   if (key === 'arrowup') state.keys.rightUp = pressed;
@@ -266,6 +272,9 @@ $('touch-serve').addEventListener('click', serveBall);
 $('fullscreen-btn').addEventListener('click', () => {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.querySelector('.page-shell').requestFullscreen?.();
+});
+document.addEventListener('fullscreenchange', () => {
+  document.querySelector('.page-shell').classList.toggle('fullscreen-mode', Boolean(document.fullscreenElement));
 });
 $('play-again-btn').addEventListener('click', () => { closeWinner(); resetMatch(); startMatch(); });
 $('preview-win-btn').addEventListener('click', () => {
