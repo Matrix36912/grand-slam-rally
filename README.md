@@ -114,20 +114,3 @@ Use a current version of Chrome, Edge, Firefox, or Safari. Fullscreen support de
 
 The player avatars are stylized game graphics inspired by public playing styles. They do not reproduce real athletes or likenesses. Player information is presented for arcade-game flavor rather than official rankings or live performance data.
 
-## Troubleshooting
-
-### The old design is still visible
-
-Refresh with `Ctrl + F5` on Windows or `Cmd + Shift + R` on macOS. GitHub Pages and browsers may cache static assets briefly.
-
-### Arrow keys scroll the page
-
-Use the deployed or current local version, which prevents arrow-key scrolling while the game is active. If an older page is open, perform a hard refresh.
-
-### The game does not load correctly from a file
-
-Run a local HTTP server instead of opening the HTML file directly. See [Run locally](#run-locally).
-
-## License
-
-No license has been specified yet. Add a license before redistributing the project.
