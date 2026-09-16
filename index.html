@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071c12" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Grand Slam Rally</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.webmanifest" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Global VR Tennis Circuit</p>
+          <h1>Grand Slam Rally</h1>
+          <p class="subheading">Build your matchup. Own the court.</p>
+        </div>
+        <div class="match-meta">
+          <div class="score-box">
+            <span id="left-score-label">Player 1</span>
+            <strong id="player-score">0</strong>
+          </div>
+          <div class="score-box accent">
+            <span id="right-score-label">Computer</span>
+            <strong id="cpu-score">0</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="setup-panel" aria-label="Match setup">
+        <div class="setup-heading">
+          <div>
+            <p class="section-kicker">Match setup</p>
+            <h2>Choose your rivals</h2>
+          </div>
+          <span class="live-pill"><i></i> Live arena</span>
+        </div>
+        <div class="setup-grid">
+          <label>
+            Game mode
+            <select id="mode-select">
+              <option value="solo">You vs Computer</option>
+              <option value="two-player">Two players</option>
+            </select>
+          </label>
+          <label class="theme-picker">
+            Court theme
+            <select id="theme-select">
+              <option value="uk">United Kingdom · Grass</option>
+              <option value="france">France · Clay</option>
+              <option value="usa">United States · Hard</option>
+              <option value="australia">Australia · Blue hard</option>
+              <option value="japan">Japan · Night court</option>
+            </select>
+          </label>
+          <label>
+            Left player
+            <select id="left-player-select"></select>
+          </label>
+          <label>
+            Right player
+            <select id="right-player-select"></select>
+          </label>
+        </div>
+        <div class="theme-strip" id="theme-strip" aria-label="Tournament theme previews"></div>
+        <div class="scout-grid">
+          <article class="scout-card" id="left-scout"></article>
+          <article class="scout-card" id="right-scout"></article>
+        </div>
+      </section>
+      <section class="how-to-play" aria-label="How to play">
+        <div>
+          <span class="step-number">1</span>
+          <strong>Start the match</strong>
+          <small>Press Start Match, then SERVE.</small>
+        </div>
+        <div>
+          <span class="step-number">2</span>
+          <strong>Move into position</strong>
+          <small>Use the ▲ ▼ pad or W / S.</small>
+        </div>
+        <div>
+          <span class="step-number">3</span>
+          <strong>Choose your shot</strong>
+          <small>Topspin is easiest. Try Slice or Lob.</small>
+        </div>
+      </section>
+
+      <main class="game-area">
+        <div class="arena-overlay"><span id="court-name">Wimbledon-inspired grass</span><span id="arena-lighting">CENTRE COURT · DAY</span></div>
+        <canvas id="gameCanvas" width="960" height="560" aria-label="Tennis game court"></canvas>
+      </main>
+
+      <div class="hud-row">
+        <div class="status-card">
+          <span class="label">Status</span>
+          <strong id="status-text">Ready to serve</strong>
+        </div>
+        <div class="status-card muted">
+          <span class="label">Timer</span>
+          <strong id="time-remaining">90s</strong>
+        </div>
+        <div class="status-card muted">
+          <span class="label">Rally speed</span>
+          <strong id="rally-speed">0 km/h</strong>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="start-btn" class="primary">Start Match</button>
+        <button id="pause-btn">Pause</button>
+        <button id="reset-btn">Reset</button>
+        <button id="preview-win-btn" class="celebrate-btn">Preview win</button>
+        <button id="fullscreen-btn" class="ghost">⛶ Fullscreen</button>
+      </div>
+      <div class="touch-controls" aria-label="Touch controls">
+        <div class="d-pad" aria-label="Player movement">
+          <button data-control="leftUp" aria-label="Move up">▲</button>
+          <button data-control="leftDown" aria-label="Move down">▼</button>
+        </div>
+        <button id="touch-serve" class="serve-touch">SERVE</button>
+        <div class="shot-pad" aria-label="Shot selection">
+          <button data-shot="slice">SLICE</button>
+          <button data-shot="topspin">TOPSPIN</button>
+          <button data-shot="lob">LOB</button>
+        </div>
+        <div class="d-pad right-pad" aria-label="Right player movement">
+          <button data-control="rightUp" aria-label="Right player move up">▲</button>
+          <button data-control="rightDown" aria-label="Right player move down">▼</button>
+        </div>
+      </div>
+      <p class="instructions"><b>Left player:</b> W / S &nbsp;·&nbsp; <b>Right player:</b> ↑ / ↓ &nbsp;·&nbsp; Space / SERVE to hit. Hold movement keys for continuous footwork.</p>
+      <p class="data-note">The roster uses stylized game avatars inspired by public playing styles. It does not reproduce real athletes or likenesses.</p>
+    </div>
+    <div class="winner-modal" id="winner-modal" role="dialog" aria-modal="true" aria-labelledby="winner-title" hidden>
+      <div class="winner-card">
+        <div class="confetti" aria-hidden="true">✦ · ✧ · ✦</div>
+        <p class="eyebrow">Match point converted</p>
+        <h2 id="winner-title">Carlos Alcaraz wins!</h2>
+        <p id="winner-subtitle">A composed finish under pressure.</p>
+        <div class="winner-score" id="winner-score">7 — 3</div>
+        <button id="play-again-btn" class="primary">Play again</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

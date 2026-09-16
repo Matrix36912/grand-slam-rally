@@ -1,0 +1,10 @@
+{
+  "name": "Grand Slam Rally",
+  "short_name": "Grand Slam Rally",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#071c12",
+  "theme_color": "#b7ff50",
+  "description": "A fast, immersive tennis arcade match.",
+  "icons": []
+}
