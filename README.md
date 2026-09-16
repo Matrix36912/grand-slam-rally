@@ -81,36 +81,9 @@ Open the URL shown in the terminal.
 
 Opening `index.html` directly may work, but using a local HTTP server is recommended for consistent browser behavior and web-app manifest loading.
 
-## Project structure
-
-```text
-.
-├── index.html              # Application markup and controls
-├── style.css               # Visual design and responsive layout
-├── script.js               # Game state, physics, rendering, and input
-├── manifest.webmanifest    # Installable web-app metadata
-└── README.md               # Project documentation
-```
-
-## Deploy to GitHub Pages
-
-This project is configured as a static site and can be hosted from the repository root:
-
-1. Push the files to the `main` branch.
-2. Open **Settings → Pages** in the GitHub repository.
-3. Select **Deploy from a branch**.
-4. Select the `main` branch and the `/ (root)` folder.
-5. Save and wait for GitHub Pages to publish the site.
-
-The current deployment is:
-
-https://matrix36912.github.io/grand-slam-rally/
-
 ## Browser support
 
 Use a current version of Chrome, Edge, Firefox, or Safari. Fullscreen support depends on browser permissions and device policies.
-
-## Design and roster note
 
 The player avatars are stylized game graphics inspired by public playing styles. They do not reproduce real athletes or likenesses. Player information is presented for arcade-game flavor rather than official rankings or live performance data.
 
